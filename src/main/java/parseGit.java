@@ -3,65 +3,120 @@ import org.json.*;
 import java.io.*;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class parseGit {
 
-    public static String parseGitRepo(String urlGit, String nomFichier) {
-
-        String apiGit;
-        if (!urlGit.contains("api.github") && !urlGit.contains("raw")) {
-            apiGit = "https://api.github.com/repos/" + urlGit.split("com/")[1] + "/contents";
+    public static String parseGitAgent(String urlGit, String nomAgent) {
+        String response = "";
+        String url = parseUrl(urlGit, "FicheAgent");
+        if (!Objects.equals(nomAgent, "")) {
+            String urlDown = parseUrl(url, nomAgent);
+            if (urlDown.matches("^(https?|ftp|file)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]")) {
+                response = parseUrl(urlDown, "");
+            } else {
+                response = urlDown;
+            }
         } else {
-            apiGit = urlGit;
+            response = "Veuillez entrez un nom d'agent.";
         }
+        System.out.println(response);
+        return response;
+    }
 
-        InputStream is = null;
-        try {
-            is = new URL(apiGit).openStream();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public static ArrayList<String> ListFileGit(String urlGit, String nomFolder) {
 
-        JSONObject jobj = null;
-        JSONObject urlObj = null;
-        String jsonText = null;
+
+        String urlFolder = parseUrl(urlGit, nomFolder);
+
+        ArrayList<String> listeFolder = parseFolder(urlFolder);
+
+        return listeFolder;
+    }
+
+    public static String parseUrl(String url, String name) {
+
+        InputStream is = openStream(url);
+
+        boolean isHere = false;
+        String response = "";
         try {
             assert is != null;
             BufferedReader rd = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
-            jsonText = readAll(rd);
-            if (jsonText.contains("{")) {
-                JSONArray jsonArray = new JSONArray(jsonText);
-                jobj = new JSONObject();
-                urlObj = new JSONObject();
+            String text = readAll(rd);
 
-                for (int i = 0; i < jsonArray.length(); i++) {
+            if (text.contains("{")) {
+                JSONArray jsonArray = new JSONArray(text);
+                int i = 0;
+                while (i < jsonArray.length() && !isHere) {
                     JSONObject jsonIndex = jsonArray.getJSONObject(i);
-                    String name = jsonIndex.getString("name");
-
-                    jobj.put(name, jsonArray.getJSONObject(i));
-                    if (!jsonIndex.isNull("download_url")) {
-                        String nameTxt = jsonIndex.getString("name");
-                        String url = jsonIndex.getString("download_url");
-                        urlObj.put(nameTxt, url);
+                    if (jsonIndex.getString("name").contains(name)) {
+                        if (!jsonIndex.isNull("download_url")) {
+                            response = jsonIndex.getString("download_url");
+                        } else {
+                            response = jsonIndex.getString("url");
+                        }
+                        isHere = true;
                     }
+                    i++;
                 }
-
-                if (urlObj.isEmpty() && !Objects.equals(nomFichier, "")) {
-                    parseGitRepo(jobj.getJSONObject(nomFichier).getString("url"), nomFichier);
-                } else {
-                    for (int i = 0; i < urlObj.names().length(); i++) {
-                        String key = urlObj.names().getString(i);
-                        parseGitRepo((String) urlObj.get(key), "");
-                    }
+                if (!isHere) {
+                    response = "Le nom d'agent n'est pas présent dans le répertoire.";
                 }
             } else {
-                return jsonText;
+                response = text;
             }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return response;
+    }
+
+    public static ArrayList<String> parseFolder(String url) {
+        ArrayList<String> listFolder = new ArrayList<>();
+
+        InputStream is = openStream(url);
+        try {
+            assert is != null;
+            BufferedReader rd = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
+            String text = readAll(rd);
+
+            if (text.contains("{")) {
+                JSONArray jsonArray = new JSONArray(text);
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject jsonIndex = jsonArray.getJSONObject(i);
+                    listFolder.add(jsonIndex.getString("name"));
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return listFolder;
+    }
+
+    public static InputStream openStream(String url) {
+        String apiGit;
+        if (!url.contains("api.github") && !url.contains("raw")) {
+            apiGit = "https://api.github.com/repos/" + url.split("com/")[1] + "/contents";
+        } else {
+            apiGit = url;
+        }
+
+        String response = "";
+        InputStream is = null;
+        boolean isHere = false;
+
+        try {
+            URL urlApi = new URL(apiGit);
+            is = urlApi.openStream();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return "";
+        return is;
     }
 
     private static String readAll(Reader rd) throws IOException {
@@ -74,6 +129,7 @@ public class parseGit {
     }
 
     public static void main(String[] args) {
-        System.out.println(parseGitRepo("https://github.com/Romain857/MsprFichiersTxt", "FicheAgent"));
+        parseGitAgent("https://github.com/Romain857/MsprFichiersTxt", "berthier");
+        ListFileGit("https://github.com/Romain857/MsprFichiersTxt", "FicheAgent");
     }
 }
