@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class listeAgents {
-    private static Object MessageBox;
-
     public static void main(String[] args) throws Exception{
 
         System.out.println("*********** Liste de fichiers **********");
