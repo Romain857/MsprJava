@@ -1,5 +1,4 @@
 import org.json.*;
-
 import java.io.*;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
@@ -7,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class parseGit {
-
+    // Cherche tout le contenu d'un agent sur le git
     public static String parseGitAgent(String urlGit, String nomAgent) {
         String response = "";
         String url = parseUrl(urlGit, "FicheAgent");
@@ -21,18 +20,14 @@ public class parseGit {
         } else {
             response = "Veuillez entrez un nom d'agent.";
         }
-        System.out.println(response);
         return response;
     }
 
+    //
     public static ArrayList<String> ListFileGit(String urlGit, String nomFolder) {
 
-
         String urlFolder = parseUrl(urlGit, nomFolder);
-
-        ArrayList<String> listeFolder = parseFolder(urlFolder);
-
-        return listeFolder;
+        return parseFolder(urlFolder);
     }
 
     public static String parseUrl(String url, String name) {
@@ -129,7 +124,7 @@ public class parseGit {
     }
 
     public static void main(String[] args) {
-        parseGitAgent("https://github.com/Romain857/MsprFichiersTxt", "berthier");
-        ListFileGit("https://github.com/Romain857/MsprFichiersTxt", "FicheAgent");
+        System.out.println(parseGitAgent("https://github.com/Romain857/MsprFichiersTxt", "berthier"));
+        System.out.println(ListFileGit("https://github.com/Romain857/MsprFichiersTxt", "ListeAgent"));
     }
 }
