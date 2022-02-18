@@ -1,8 +1,40 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.io.FileReader;
+import java.io.BufferedReader;
+import java.io.IOException;
 
 public class listeAgents {
+
+    public static String htmlPage;
+    public static String[] tabAgents;
+    public static String listeAgents;
+
+
+    public static void readHtml() throws IOException {
+            System.out.println("Working Directory = " + System.getProperty("user.dir"));
+			BufferedReader in = new BufferedReader(new FileReader("src/main/templates/index.html"));
+			while (( htmlPage = in.readLine()) != null)
+			{
+   			  System.out.println (htmlPage);
+			}
+			in.close();
+    }
+
+    public static void replaceHtml() {
+        System.out.println(htmlPage);
+        tabAgents = listeAgents.split("\n");
+        String agent_link = "";
+        
+        for (String agent : tabAgents) {
+            agent_link += "<a href=\"agent/" + agent + "\">" + agent + "</a>\n";
+        }
+
+        htmlPage = htmlPage.replace("{{% AGENT_LINK %}}", agent_link);
+
+        System.out.println(htmlPage);
+    }
 
     public static ArrayList<String> getListNom(){
         ArrayList<String> ficheAgent = parseGit.ListFileGit("https://github.com/Romain857/MsprFichiersTxt", "FicheAgent");
@@ -18,7 +50,7 @@ public class listeAgents {
 
     private static ArrayList<String> DisplayAgent() {
         System.out.println("*********** Accueil **********");
-        String listeAgents = parseGit.parseGitAgent("https://github.com/Romain857/MsprFichiersTxt", "ListeAgents", "staff.txt");
+        listeAgents = parseGit.parseGitAgent("https://github.com/Romain857/MsprFichiersTxt", "ListeAgents", "staff.txt");
         ArrayList<String> myList = new ArrayList<>(Arrays.asList(listeAgents.split("\n")));
         ArrayList<String> listNoms = getListNom();
         if (listNoms.equals(myList)) {
@@ -42,7 +74,9 @@ public class listeAgents {
     }
 
     public static void main(String[] args) throws Exception {
-        DisplayListeNom();
-        //DisplayAgent();
+        //DisplayListeNom();
+        DisplayAgent();
+        readHtml();
+        replaceHtml();
     }
 }
