@@ -7,11 +7,11 @@ import java.util.Objects;
 
 public class parseGit {
     // Cherche tout le contenu d'un agent sur le git
-    public static String parseGitAgent(String urlGit, String nomAgent) {
+    public static String parseGitAgent(String urlGit, String nomDossier, String nomFichier) {
         String response = "";
-        String url = parseUrl(urlGit, "FicheAgent");
-        if (!Objects.equals(nomAgent, "")) {
-            String urlDown = parseUrl(url, nomAgent);
+        String url = parseUrl(urlGit, nomDossier);
+        if (!Objects.equals(nomFichier, "")) {
+            String urlDown = parseUrl(url, nomFichier);
             if (urlDown.matches("^(https?|ftp|file)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]")) {
                 response = parseUrl(urlDown, "");
             } else {
@@ -24,7 +24,7 @@ public class parseGit {
     }
 
     //
-    public static ArrayList<String> ListFileGit(String urlGit, String nomFolder) {
+        public static ArrayList<String> ListFileGit(String urlGit, String nomFolder) {
 
         String urlFolder = parseUrl(urlGit, nomFolder);
         return parseFolder(urlFolder);
@@ -121,10 +121,5 @@ public class parseGit {
             sb.append((char) cp);
         }
         return sb.toString();
-    }
-
-    public static void main(String[] args) {
-        System.out.println(parseGitAgent("https://github.com/Romain857/MsprFichiersTxt", "berthier"));
-        System.out.println(ListFileGit("https://github.com/Romain857/MsprFichiersTxt", "ListeAgent"));
     }
 }
