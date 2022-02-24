@@ -29,7 +29,7 @@ public class listeAgents {
         String agent_link = "";
         
         for (String agent : listeAgents) {
-            agent_link += "<li><a href=\"agent/" + agent + "\">" + agent + "</a></li>\n";
+            agent_link += "<li><a href=\"agents/" + agent + ".html\">" + agent + "</a></li>\n";
         }
 
         htmlPage = htmlPage.replace("{{% AGENT_LINK %}}", agent_link);

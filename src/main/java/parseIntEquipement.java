@@ -77,7 +77,7 @@ public class parseIntEquipement {
     public static void createHtmlFile(String pseudo) throws IOException {  
         // Recevoir le fichier 
 
-        String jecomprendpas = "build/"+pseudo+".html";
+        String jecomprendpas = "build/agents/"+pseudo+".html";
         // System.out.println(jecomprendpas);
         // System.out.println(agentPseudo);
 
@@ -103,7 +103,7 @@ public class parseIntEquipement {
 
         System.out.println("File created");
 
-        FileOutputStream fos = new FileOutputStream("build/" + pseudo + ".html");
+        FileOutputStream fos = new FileOutputStream("build/agents/" + pseudo + ".html");
         fos.write(htmlPage.getBytes());
         fos.flush();
         fos.close();
