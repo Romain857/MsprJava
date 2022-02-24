@@ -1,20 +1,16 @@
 <!DOCTYPE html>
 <html lang="fr">
     <head>
-        <title>Agent {{name}}</title>
+        <title>Agent {{% AGENT_NAME %}}</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="css/style.css" rel="stylesheet">
     </head>
     <body>
-        <h1>{{name}}</h1>
-        <img src="ID/{{username}}.png" alt="">
+        <h1>{{% AGENT_NAME %}}</h1>
+        <img src="ID/{{% AGENT_IDCARD %}}.png" alt="">
         <ul>
-            {% foreach materiel in materiels %}
-                <li>
-                    <a href="agent/{{agent.id}}">{{name}}</a>
-                    <input type="checkbox" name="checkbox" id="checkbox">
-                </li>
+            {{% AGENT_MATERIEL %}}
         </ul>
     </body>
 </html>
