@@ -39,12 +39,12 @@ public class listeAgents {
     }
 
     public static ArrayList<String> getListNom(){
-        ArrayList<String> ficheAgent = parseGit.ListFileGit("https://github.com/Romain857/MsprFichiersTxt", "FicheAgent");
+        ArrayList<String> ficheAgent = parseGit.ListFileGit("https://github.com/DreamTeamOberj/MsprFichiersTxt", "FicheAgent");
         ArrayList<String> listNoms = new ArrayList<>();
 
         for (String item : ficheAgent) {
             String fichierWithOutExt = item.replaceFirst("[.][^.]+$", "");
-            // String FicheAgent = parseGit.parseGitAgent("https://github.com/Romain857/MsprFichiersTxt", "FicheAgent", item);
+            // String FicheAgent = parseGit.parseGitAgent("https://github.com/DreamTeamOberj/MsprFichiersTxt", "FicheAgent", item);
             listNoms.add(fichierWithOutExt);
         }
         return listNoms;
@@ -52,7 +52,7 @@ public class listeAgents {
 
     private static ArrayList<String> DisplayAgent() {
         System.out.println("*********** Accueil **********");
-        String listeAgents = parseGit.parseGitAgent("https://github.com/Romain857/MsprFichiersTxt", "ListeAgents", "staff.txt");
+        String listeAgents = parseGit.parseGitAgent("https://github.com/DreamTeamOberj/MsprFichiersTxt", "ListeAgents", "staff.txt");
         ArrayList<String> myList = new ArrayList<>(Arrays.asList(listeAgents.split("\n")));
         ArrayList<String> listNoms = getListNom();
         if (listNoms.equals(myList)) {
@@ -76,7 +76,7 @@ public class listeAgents {
 
     public static void createHtmlFile() throws IOException {  
         // Recevoir le fichier 
-        File f = new File("src/main/build/index.html");
+        File f = new File("build/index.html");
 
         // Créer un nouveau fichier
         // Vérifier s'il n'existe pas
@@ -97,7 +97,7 @@ public class listeAgents {
 
         System.out.println("File created");
 
-        FileOutputStream fos = new FileOutputStream("src/main/build/index.html");
+        FileOutputStream fos = new FileOutputStream("build/index.html");
         fos.write(htmlPage.getBytes());
         fos.flush();
         fos.close();
