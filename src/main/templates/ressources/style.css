@@ -14,11 +14,20 @@ h3 {
 
 h1 {
     font-size: x-large;
+    position: absolute;
     width: max-content;
     border: 1px solid black;
+    border-radius: 5px;
     text-align: left;
-    margin: 5% 5% 0;
+    margin: 5% 10% 0;
     padding: 0.5%;
+}
+
+h4 {
+    font-size: large;
+    position: absolute;
+    margin: 10% 10% 0;
+
 }
 
 .navbar {
@@ -74,7 +83,25 @@ h1 {
 }
 
 .imgAgent {
+    float: right;
+    margin: 5% 10% 0;
+    width: 600px;
+    height: 300px;
+    border: 1px solid black;
+}
+
+.listeEquipement {
+    font-size: large;
+    width: inherit;
+    margin: 12% 10% 0;
+    list-style: none;
 
 }
+
+.checkbox {
+    margin: 0.7% 0 0 0.5%;
+}
+
+
 
 
