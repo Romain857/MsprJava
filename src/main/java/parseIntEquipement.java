@@ -57,12 +57,12 @@ public class parseIntEquipement {
         htmlPage = htmlPage.replace("{{% AGENT_NAME %}}", agentName);
         
         for (ArrayList<String> equipement : listeEquipement) {
-            equip_list += "<li>" + equipement.get(1) +"\n";
+            equip_list += "<li class=\"Equipement\">" + equipement.get(1) +"\n";
 
             if (Arrays.toString(listeEquipementAgent.toArray()).contains(equipement.get(0))) {
-                equip_list += "<input type=\"checkbox\" name=\"checkbox\" id=\"checkbox\" onclick=\"return false;\" checked>\n";
+                equip_list += "<input type=\"checkbox\" name=\"checkbox\" class=\"checkbox\" onclick=\"return false;\" checked>\n";
             } else {
-                equip_list += "<input type=\"checkbox\" name=\"checkbox\" id=\"checkbox\" onclick=\"return false;\">\n";
+                equip_list += "<input type=\"checkbox\" name=\"checkbox\" class=\"checkbox\" onclick=\"return false;\">\n";
             }
  
             equip_list += "</li>\n";
