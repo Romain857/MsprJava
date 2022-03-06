@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <title>Agent {{% AGENT_NAME %}}</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="../css/style.css" rel="stylesheet">
+        <nav class="navbar">
+            <img src="../img/goSecuri.png">
+            <a class="navbar-brand" href="../index.html">Go Securi</a>
+        </nav>
+    </head>
+    <body>
+        <h1>{{% AGENT_NAME %}}</h1>
+        <img src="ID/{{% AGENT_IDCARD %}}.png" alt="">
+        <h4> Liste des équipements</h4>
+        <ul class="listeEquipement">
+            {{% AGENT_MATERIEL %}}
+        </ul>
+    </body>
+</html>
