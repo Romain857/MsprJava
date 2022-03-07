@@ -5,6 +5,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="./css/style.css" rel="stylesheet">
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <nav class="navbar">
             <img src="img/goSecuri.png">
             <a class="navbar-brand" href="../index.html">Go Securi</a>
@@ -13,9 +14,17 @@
     <body>
     <h3> Liste des agents</h3>
         <ul class="listeAgent">
-
             {{% AGENT_LINK %}}
-
         </ul>
     </body>
+    <script>
+        $(document).ready(function() {
+            var mylist = $('.listeAgent');
+            var listitems = mylist.children('li').get();
+            listitems.sort(function(a, b) {
+                return $(a).text().toUpperCase().localeCompare($(b).text().toUpperCase());
+            })
+            $.each(listitems, function(idx, itm) { mylist.append(itm); });
+        });
+    </script>
 </html>
